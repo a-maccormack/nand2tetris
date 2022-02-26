@@ -161,5 +161,11 @@ Any Boolean function can be represented using an expression containing AND, OR, 
 
 #### Proof of earlier claim:
 We already prooved that OR is not needed, so all that there's missing to prove are thr NOT and AND Boolean operators:
-1) NOT(x) = (x NAND x)
-2) (x AND y) = NOT(x NAND y)
+1) NOT:
+```
+NOT(x) = (x NAND x)
+```
+2) AND:
+```
+(x AND y) = NOT(x NAND y)
+```
