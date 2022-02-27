@@ -215,3 +215,54 @@ Combining elementary gates to form "mixed" gates
 ### Circuit implementations:
 Logical gates can be implemented in circuits, electrically. 
 
+## 1.4 Hardware Description Language (HDL)
+### Design: from requirements to interface:
+Given specific requirements, we can start building or delivering a gate with a specific functionality on an HDL script with the following syntax:
+
+```vhdl
+CHIP Xor {
+  IN a, b;
+  OUT out;
+  
+  PARTS:
+  //Implementation missing
+}
+```
+#### Electrical Diagram:
+![Screenshot from 2022-02-27 19-01-40](https://user-images.githubusercontent.com/78695941/155901773-dcec78f1-55f3-4e1b-8e3b-a1302511c4ae.png)
+
+* The dashed line serves as the boundary of the chip diagram. 
+  * What remains outside the boundary is the high level view
+  * What remains inside the boundary is  lower level view
+
+##### A few things to notice:
+* The "a" and "b" signals are being distributed across 2 distinct gates [NOT, AND]
+* Dispatching of signal is done simultaneously
+
+Knowing this, we can now continue filling out our HDL program:
+
+**HDL is no more than a textual description of the diagram above**
+```vhdl
+CHIP Xor {
+  IN a, b;
+  OUT out;
+  
+  PARTS:
+  Not (in=a, out=nota);
+  Not (in=b, out=notb);
+  And (a=a, b=notb, out=aAndNotb);
+  And (a=nota, b=b, out=notaAndb);
+  Or  (a=aAndNotb, b=notaAndb, out=out);
+  
+}
+```
+
+### General HDL comments:
+1. Diagram should be described from left to right.
+2. HDL is a functional / declarative language. It is a static description that is not run. Usually goes into an interpreter and nothing more.
+3. It is important to remember the parameters for already defined gates:
+```
+Not(in, out);
+And(a, b, out);
+Or(a, b, out);
+```
