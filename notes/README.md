@@ -169,3 +169,49 @@ NOT(x) = (x NAND x)
 ```
 (x AND y) = NOT(x NAND y)
 ```
+## 1.3 Logic Gates
+### Gate Logic
+* A technique for implementing boolean functions using logic gates
+* Logic Gates:
+  * Elementary (NAND,AND, OR, NOT, ...) 
+  * Composite (MUX, ADDER) 
+
+### Elementary Logic gates:
+#### NAND:
+```python
+if (a == 1 and b == 1):
+  return 0
+else:
+  return 1
+```
+
+#### AND:
+```python
+if (a == 1 and b == 1):
+  return 1
+else: 
+  return 0
+```
+
+#### OR:
+```python
+if (a == 1 or b == 1):
+  return 1
+else:
+  return 0
+```
+
+#### NOT:
+```python
+if (in == 0):
+  return 1
+else:
+  return 0
+```
+
+### Composite Gates:
+Combining elementary gates to form "mixed" gates
+
+### Circuit implementations:
+Logical gates can be implemented in circuits, electrically. 
+
