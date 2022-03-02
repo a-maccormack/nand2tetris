@@ -296,4 +296,46 @@ set a 1, set b 1, eval, output;
   * System architects &rarr;  Has user level specifications. Decides which chips are needed.
   * Developer &rarr; Given architect specifications, developers build the chips using HDL or something of the sorts.
 
+## 1.6 Multi-bit Buses
+When designing hardware we must manipulate arrays of bits. It is convenient to think of such bits as a single entity (BUS). HDL provides the following convenient notation to handle these buses:
 
+### Using Buses
+Chip that adds two 16 bit numbers:
+```vhdl
+/*
+ * Adds two 16-bit values.
+ */
+  
+CHIP Add16 {
+  IN a[16], b[16];
+  OUT out[16];
+    
+  PARTS:
+    ...
+}
+```
+
+Chip that adds 3 16 bit numbers:
+```vhdl
+/*
+ * Adds three 16-bit values.
+ */
+  
+  CHIP Add16 {
+    IN first[16], second[16], third[16];
+    OUT out[16];
+    
+    PARTS:
+      
+      Add16(a=first, b=second, out=temp);
+      Add16(a=temp, b=third, out=out);
+}
+```
+
+#### Breaking buses into sub-buses:
+```vhdl
+  IN lsb[8], msb[8], ...
+  
+  Add(a[0..7]=lsb, a[8..15]=msb, b=..., out=...);
+  Add(..., out[0..3]=t1, out[4..15]=t2);
+```
