@@ -339,3 +339,112 @@ Chip that adds 3 16 bit numbers:
   Add(a[0..7]=lsb, a[8..15]=msb, b=..., out=...);
   Add(..., out[0..3]=t1, out[4..15]=t2);
 ```
+
+## 1.7 Project 1 Overview
+### Statement:
+Given Nand, build the following gates:
+
+|Elementary Logic Gates|16-Bit Variants|Multi-way Variants|
+|----------------------|---------------|------------------|
+| `Not`                | `Not16`       | `Or8Way`         |
+| `And`                | `And16`       | `Mux4Way16`      |
+| `Or`                 | `Or16`        | `Mux8Way16`      |
+| `Xor`                | `Mux16`       | `DMux4Way`       |
+| `Mux`                |               | `DMux8Way`       |
+| `Dmux`               |               |                  |
+
+
+All of these 15 gates comprise all of the elementary logic gates that we need to build a computer. 
+
+### Multiplexor [Mux]
+
+![Screenshot from 2022-03-01 22-48-43](https://user-images.githubusercontent.com/78695941/156279188-7ecd618c-390a-45c2-85b2-decadba6cc30.png)
+
+#### Behaviour:
+```python
+if sel == 0:
+  return a
+elif sel == 1:
+  return b
+```
+#### Where is it used:
+1. Digital design
+2. Comunication Networks
+
+#### Using mux logic to build a programable gate:
+
+```
+#We could build an AndMuxOr gate:
+
+if sel == 0:
+  out = (a And b)
+elif sel ==1:
+  out = (a Or b)
+```
+
+#### AndMuxOr HDL
+
+```
+CHIP AndMuxOr {
+  IN a, b, sel;
+  OUT out;
+  
+  PARTS:
+  And(a=a, b=b, out=andOut);
+  Or(a=a, b=b, out=orOut);
+  Mux(a=andOut, b=orOut, sel=sel, out=out);
+}
+```
+
+### Demultiplexor [DMux]
+
+![Screenshot from 2022-03-01 23-01-44](https://user-images.githubusercontent.com/78695941/156280436-de15055a-ba82-486a-8af2-73e984f8c98b.png)
+
+#### Behaviour
+```python
+if sel == 0:
+  a,b = in,0
+elif sel == 1:
+  a,b = 0, in
+```
+Receives single input, and depending on selection bit, it routes input through a or b. The channel that is not chosen, returns 0.
+
+#### Multiplexing / Demultiplexing in communication networks:
+
+![Screenshot from 2022-03-01 23-08-10](https://user-images.githubusercontent.com/78695941/156281062-1cf811f8-6ba1-43e5-8b8e-19aebdfeb824.png)
+
+### And16
+
+![Screenshot from 2022-03-01 23-09-48](https://user-images.githubusercontent.com/78695941/156281246-7b896add-9f6d-4517-a135-f14d98a87b95.png)
+
+#### Behaviour
+```python
+a = 1010101101011100
+b = 0010110100101010
+
+out = 0010100100001000
+```
+And(a[0], b[0]), And(a[1], b[1]), And(a[2], b[2]) ...
+out = out[0] out[1] out[2]....
+
+Calculation is not secuential but parallel
+
+
+### 16 bit, 4-way multiplexor [Mux4Way16]
+
+![Screenshot from 2022-03-01 23-16-18](https://user-images.githubusercontent.com/78695941/156281855-bb32288f-5af2-4ef8-bc32-9c157383be44.png)
+
+#### Simplified truth table:
+
+|sel[1]|sel[0]|out|
+|------|------|---|
+|0     |0     |a  |
+|0     |1     |b  |
+|1     |0     |c  |
+|1     |1     |d  |
+
+
+
+
+
+
