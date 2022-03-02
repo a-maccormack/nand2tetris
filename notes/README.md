@@ -100,11 +100,13 @@ Given a truth table below, construct a function...
 |1|1|0|0|
 |1|1|1|0|
 
+We must focus on the rows that expect a 1, and form functions that only return 1 on that particular row. 
+
 ### Finding applicable function for row 1:
 ```
 (NOT(x) AND NOT(y) AND NOT(z)) = 1 
 ```
-This function gets a value of 1 on the first row, but 0 for all other table rows. Because of this, we must move to the the next table row that expects a 1. In our case, it's located on row #3.
+This function gets a value of 1 on the first row, but 0 for all other table rows. We must move to the the next table row that expects a 1. In our case, it's located on row #3.
 
 ### Finding applicable function for row 3:
 ```
